@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ScreenshotController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('screenshots', [ScreenshotController::class, 'index']);
+
+Route::get('screenshots/getScreenshot/{website}', [ScreenshotController::class, 'getScreenshot']);
+
+Route::get('screenshots/store', [ScreenshotController::class, 'store']);
