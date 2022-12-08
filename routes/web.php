@@ -21,4 +21,3 @@ Route::get('screenshots', [ScreenshotController::class, 'index']);
 
 Route::get('screenshots/getScreenshot/{website}', [ScreenshotController::class, 'getScreenshot']);
 
-Route::get('screenshots/store', [ScreenshotController::class, 'store']);
