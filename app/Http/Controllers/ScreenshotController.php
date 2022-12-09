@@ -37,7 +37,7 @@ class ScreenshotController extends Controller
 
     public function checkImageNeedsUpdate($website)
     {
-        return Screenshot::select('id', 'website')->where('website', '=', $website)->where('updated_at', '<', Carbon::now()->subDays(2))->get()->count() > 0;
+        return Screenshot::select('id', 'website')->where('website', '=', $website)->where('updated_at', '<', Carbon::now()->subDays(3))->get()->count() > 0;
     }
 
     public function checkImageExists($website)
