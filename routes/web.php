@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Route::get('screenshots', [ScreenshotController::class, 'index']);
 
+Route::get('screenshots/updateScreenshot/{website}', [ScreenshotController::class, 'updateScreenshot']);
+
 Route::get('screenshots/getScreenshot/{website}', [ScreenshotController::class, 'getScreenshot']);
 
 Route::get('screenshots/checkImageNeedsUpdate', [ScreenshotController::class, 'checkImageNeedsUpdate']);

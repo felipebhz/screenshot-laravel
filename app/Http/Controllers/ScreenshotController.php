@@ -38,7 +38,7 @@ class ScreenshotController extends Controller
     }
 
     //get ss from 3rd party service
-    public function getScreenshot(Request $request, $website)
+    public function updateScreenshot(Request $request, $website)
     {
         $response = Http::post('http://demo4455834.mockable.io/v1/screenshot/' . $website . '');
 
