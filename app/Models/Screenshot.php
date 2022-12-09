@@ -9,5 +9,5 @@ class Screenshot extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['website', 'content', 'mime-type'];
+    protected $fillable = ['website', 'content', 'mime-type', 'filename'];
 }
