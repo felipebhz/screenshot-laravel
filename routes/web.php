@@ -17,12 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('screenshots/getScreenshot/{website}', [ScreenshotController::class, 'getScreenshot']);
+
 Route::get('screenshots', [ScreenshotController::class, 'index']);
 
 Route::get('screenshots/updateScreenshot/{website}', [ScreenshotController::class, 'updateScreenshot']);
 
-Route::get('screenshots/getScreenshot/{website}', [ScreenshotController::class, 'getScreenshot']);
-
 Route::get('screenshots/checkImageNeedsUpdate', [ScreenshotController::class, 'checkImageNeedsUpdate']);
-
-//Route::get('screenshots/store', [ScreenshotController::class, 'store']);

@@ -20,6 +20,21 @@ class ScreenshotController extends Controller
         }
     }
 
+    public function getScreenshot($website)
+    {
+        $screenshotData = false;
+        if (Screenshot::select('content')->where('website', '=', $website)->first()) {
+            $screenshotData = Screenshot::select('content')->where('website', '=', $website)->first()->content;
+        }
+        if (!$screenshotData) {
+            $this->updateScreenshot($website);
+            $screenshotData = Screenshot::select('content')->where('website', '=', $website)->first()->content;
+        } elseif ($screenshotData && $this->checkImageNeedsUpdate($website)) {
+            $this->updateScreenshot($website);
+        }
+        return $screenshotData;
+    }
+
     public function checkImageNeedsUpdate($website)
     {
         return Screenshot::select('id', 'website')->where('website', '=', $website)->where('updated_at', '<', Carbon::now()->subDays(2))->get()->count() > 0;
@@ -38,13 +53,13 @@ class ScreenshotController extends Controller
     }
 
     //get ss from 3rd party service
-    public function updateScreenshot(Request $request, $website)
+    public function updateScreenshot($website)
     {
         $response = Http::post('http://demo4455834.mockable.io/v1/screenshot/' . $website . '');
 
         $jsonData = $response->json();
         $jsonData['website'] = $website;
-        
+
         if ($this->checkImageExists($website) && $this->checkImageNeedsUpdate($website)) {
             $oldFileName = $this->getCurrentWebsiteFilename($website);
             $currentSavedFileName = $this->saveFileDisk($jsonData['content'], $jsonData['mime-type'], $website);
@@ -54,8 +69,6 @@ class ScreenshotController extends Controller
 
             // remove old file
             Storage::delete($oldFileName);
-
-
         } elseif (!$this->checkImageExists($website)) {
             $currentSavedFileName = $this->saveFileDisk($jsonData['content'], $jsonData['mime-type'], $website);
             if ($currentSavedFileName) {
