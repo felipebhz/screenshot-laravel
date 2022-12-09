@@ -24,11 +24,13 @@ class ScreenshotController extends Controller
     {
         $screenshotData = false;
         if (Screenshot::select('content')->where('website', '=', $website)->first()) {
-            $screenshotData = Screenshot::select('content')->where('website', '=', $website)->first()->content;
+            $screenshotData = Screenshot::select('content')->where('website', '=', $website)->first();
+            $screenshotData = response()->json($screenshotData->content);
         }
         if (!$screenshotData) {
             $this->updateScreenshot($website);
-            $screenshotData = Screenshot::select('content')->where('website', '=', $website)->first()->content;
+            $screenshotData = Screenshot::select('content')->where('website', '=', $website)->first();
+            $screenshotData = response()->json($screenshotData->content);
         } elseif ($screenshotData && $this->checkImageNeedsUpdate($website)) {
             $this->updateScreenshot($website);
         }
