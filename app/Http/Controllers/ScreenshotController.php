@@ -15,9 +15,7 @@ class ScreenshotController extends Controller
 {
     public function index()
     {
-        foreach (Screenshot::all() as $image) {
-            echo $image->website;
-        }
+        return response()->json(Screenshot::all());
     }
 
     public function getScreenshot($website)
