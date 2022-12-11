@@ -13,11 +13,21 @@ use Illuminate\Support\Carbon;
 
 class ScreenshotController extends Controller
 {
+    /**
+     * Retrieve all screenshots available for the application.
+     *
+     * @return string
+     */
     public function index()
     {
         return response()->json(Screenshot::all());
     }
 
+    /**
+     * Retrieve data for one screenshot based on website name and handle the response.
+     *
+     * @return string
+     */
     public function getScreenshot($website)
     {
         $screenshotData = false;
@@ -35,11 +45,25 @@ class ScreenshotController extends Controller
         return $screenshotData;
     }
 
+    /**
+     * Check if screenshot data needs to updated.
+     * 
+     * @param string $website
+     * 
+     * @return bool
+     */
     public function checkImageNeedsUpdate($website)
     {
         return Screenshot::select('id', 'website')->where('website', '=', $website)->where('updated_at', '<', Carbon::now()->subDays(3))->get()->count() > 0;
     }
 
+    /**
+     * Check if screenshot is already in the system.
+     *
+     * @param string $website
+     * 
+     * @return bool
+     */
     public function checkImageExists($website)
     {
         $recordsFound = DB::table('screenshots')->select('filename')->where('website', '=', $website)->count();
@@ -47,12 +71,32 @@ class ScreenshotController extends Controller
         return $exists;
     }
 
+    /**
+     * Check the current screenshot's filename for a given website.
+     *
+     * @param string $website
+     * 
+     * @return string
+     */
     public function getCurrentWebsiteFilename($website)
     {
         return Screenshot::where('website', $website)->first()->filename;
     }
 
-    //get ss from 3rd party service
+    /**
+     * Check the current status of screenshot for a given website 
+     * and handle acordingly.
+     * 
+     * A simple API mock has been used in this function to provide a more
+     * realistic request/response to comply with the needs of the app.
+     * 
+     * Service used: mockable.io | Response received is screenshot data in
+     * base64 string and some data from the website.
+     *
+     * @param string $website
+     * 
+     * @return string
+     */
     public function updateScreenshot($website)
     {
         $response = Http::post('http://demo4455834.mockable.io/v1/screenshot/' . $website . '');
@@ -66,8 +110,6 @@ class ScreenshotController extends Controller
             if (Storage::disk('local')->exists($currentSavedFileName)) {
                 $this->update($jsonData, $currentSavedFileName);
             }
-
-            // remove old file
             Storage::delete($oldFileName);
         } elseif (!$this->checkImageExists($website)) {
             $currentSavedFileName = $this->saveFileDisk($jsonData['content'], $jsonData['mime-type'], $website);
@@ -76,23 +118,47 @@ class ScreenshotController extends Controller
                 $this->store($jsonData);
             }
         } else {
-            echo 'already updated';
+            $alreadyUpdated = ['status' => 'Updated'];
+            return json_encode($alreadyUpdated);
         }
     }
 
-    //save ss data on database
+    /**
+     * Write website's screenshot data on database.
+     *
+     * @param string $jsonData
+     * 
+     * @return void
+     */
     public function store($jsonData)
     {
         $storedImage = Screenshot::create($jsonData);
     }
 
-    // update ss data on database
+    /**
+     * Update website's screenshot data on database.
+     *
+     * @param string $jsonData
+     * 
+     * @return void
+     */
     public function update($jsonData, $fileName)
     {
         $affectedRows = Screenshot::where('website', '=', $jsonData['website'])->update(['filename' => $fileName]);
     }
 
-    //save ss file into disk
+    /**
+     * Writes website's screenshot data on database.
+     *
+     * Str::uuid has been used to create unique filenames
+     * and avoid filenames conflicts.
+     * 
+     * @param string $base64String
+     * @param string $fileExtension
+     * @param string $website
+     * 
+     * @return string
+     */
     public function saveFileDisk($base64String, $fileExtension, $website)
     {
         $fileExtension = getBase64FileExtension($fileExtension);
