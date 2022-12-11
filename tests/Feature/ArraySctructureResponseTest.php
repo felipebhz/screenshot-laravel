@@ -10,9 +10,11 @@ use Tests\TestCase;
 
 class ArraySctructureResponseTest extends TestCase
 {
+    // Uncomment this to refresh the database when running the tests. WARNING: Have a backup or a separate database for this.
     //use RefreshDatabase;
+
     /**
-     * A basic feature test example.
+     * A test to assert the output structure of the data received from the 3rd-party service.
      *
      * @return void
      */
