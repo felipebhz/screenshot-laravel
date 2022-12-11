@@ -37,3 +37,10 @@ Talking about the **controller and its methods**, here are the reasons why I wro
 * `store()` - Saves the screenshot data on our end (database).
 
 * `saveFileDisk()` - it will get the base64 string and decode it to the image itself, while creating the filename. On this method, I have used uuid() to take advantage of an existent method to create safe unique filenames.
+
+### Testing
+The process of testing the application was quite simple, as it was only a portion of a real-world software.
+I have written simple tests for the most common parts, so I could show my ability to work with `PHP Unit` for testing purposes.
+
+### Docker
+Docker containers have been implemented using the most simple architecture to do not overload this test with issues regarding infrastructure and to be reliable to test on a quick way.
