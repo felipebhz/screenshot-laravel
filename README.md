@@ -1,66 +1,59 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## About Screenshot App
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is an application to provide updated screenshots of the best casinos websites.
 
-## About Laravel
+With this application you will have access to the reviews and the screenshots of the most common casinos websites in the world.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Some of them are:
+- [Betboo](https://www.betboo.com)
+- [Bet365](https://www.bet365.com)
+- [Awesome Casino](https://www.awesomecasino.com)
+- [Betfair](https://www.betfair.com)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## How to run this application
+- Prerequisites:
+    - Docker Installed on the Host Machine
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Full Application is made up of 2 independent parts.
+Backend (Laravel) **this application**
+and Frontend (React) another application found here: [Frontend in ReactJS](https://github.com/felipebhz/screenshot-react)
+*This guide will show how to setup the backend site.*
 
-## Learning Laravel
+If you want to use PHPMyAdmin and/or Mailhog you need to **uncomment** the services in the `docker-compose.yaml` file **before** running the commands below.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**First Step:**
+- Clone this repository
+    - `cd` into the directory where the repository has been cloned
+- Run the following commands from the same folder as above
+	- On Linux: `docker run --rm -v “$(pwd)”:/app composer install`
+    - On Windows: `docker run --rm -v ${pwd}:/app composer install`
+*The command will install all dependencies with an official composer container*
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    - `docker-compose up -d --force-recreate --build`
+*Command to start and build (or rebuild) docker containers*
+    - `docker-compose exec app php artisan key:generate`
+*This one is necessary to create laravel's key for the application*
+    - `docker-compose exec app php artisan optimize`
+ *Optimize laravel's files and scripts*
+    - `docker-compose exec app php artisan migrate:refresh`
+*Run database migrations, deleting the data and reseting the database*
+	- Open your web browser and goto http://localhost:8001 to see the landing page.
+*Keep in mind this application is the backend / API and will not have anything else visible other than a landing page for entrypoint.*
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
+### Troubleshooting 
+- Docker can take a while to start, build and load all the dependencies on Windows using WSL2.
+- Nginx access log output can be found on `/var/log/nginx/access.log` and error log can be found on `/var/log/nginx/error.log`
+- Stop any other services you may have running on your machine before starting docker. Ports can be in conflict.
+---
+### Softwares used in this application
+- PHP 8.1.13
+- Laravel 9.43.0
+- Nginx 1.21
+- Docker Compose 3.8
+- MySQL 8.0
+- Docker Desktop latest (Windows)
+---
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This application is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
