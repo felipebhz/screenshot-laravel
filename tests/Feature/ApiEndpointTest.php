@@ -9,7 +9,7 @@ use Tests\TestCase;
 class ApiEndpointTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * A basic test to make sure the endpoint is responding with a 200 HTTP code.
      *
      * @return void
      */
