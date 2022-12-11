@@ -60,3 +60,6 @@ If you want to use PHPMyAdmin and/or Mailhog you need to **uncomment** the servi
 ## License
 
 This application is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+### Short video of the application running
+[Video Download](https://drive.google.com/file/d/1eMYkUsUDDJ0p5a9WPXNZWz1BhwmMSch-/view?usp=sharing)
