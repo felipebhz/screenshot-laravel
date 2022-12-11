@@ -109,8 +109,9 @@ class ScreenshotController extends Controller
             $currentSavedFileName = $this->saveFileDisk($jsonData['content'], $jsonData['mime-type'], $website);
             if (Storage::disk('local')->exists($currentSavedFileName)) {
                 $this->update($jsonData, $currentSavedFileName);
+                Storage::delete($oldFileName);
             }
-            Storage::delete($oldFileName);
+            
         } elseif (!$this->checkImageExists($website)) {
             $currentSavedFileName = $this->saveFileDisk($jsonData['content'], $jsonData['mime-type'], $website);
             if ($currentSavedFileName) {
