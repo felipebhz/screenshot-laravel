@@ -1,5 +1,8 @@
 ## About Screenshot App
 
+**This guide will show how to setup the Backend in Laravel.**
+
+
 This is an application to provide updated screenshots of the best casinos websites.
 
 With this application you will have access to the reviews and the screenshots of the most common casinos websites in the world.
