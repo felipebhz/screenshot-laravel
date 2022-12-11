@@ -38,6 +38,8 @@ Talking about the **controller and its methods**, here are the reasons why I wro
 
 * `saveFileDisk()` - it will get the base64 string and decode it to the image itself, while creating the filename. On this method, I have used uuid() to take advantage of an existent method to create safe unique filenames.
 
+*For this test, I didn't created the methods and routes to delete values from the database, making a call from the frontend, as this could be used as room for improvement in a more complete application.*
+
 ### Testing
 The process of testing the application was quite simple, as it was only a portion of a real-world software.
 I have written simple tests for the most common parts, so I could show my ability to work with `PHP Unit` for testing purposes.
